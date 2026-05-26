@@ -1,0 +1,62 @@
+[
+  {
+    "id": "48c49e19-7fe",
+    "item_id": "H2O-082",
+    "item_name": "Água potável (bolsas 2L)",
+    "quantity_consumed": 16,
+    "unit": "unidades",
+    "astronaut_id": "AST-01",
+    "notes": "Consumo dia 1",
+    "timestamp": "2026-05-26T22:55:06+00:00"
+  },
+  {
+    "id": "b4040551-abe",
+    "item_id": "H2O-082",
+    "item_name": "Água potável (bolsas 2L)",
+    "quantity_consumed": 18,
+    "unit": "unidades",
+    "astronaut_id": "AST-02",
+    "notes": "Consumo dia 1 (continuação)",
+    "timestamp": "2026-05-26T22:55:06+00:00"
+  },
+  {
+    "id": "c7cc966b-346",
+    "item_id": "FD-203",
+    "item_name": "Ração liofilizada (pacotes 350g)",
+    "quantity_consumed": 6,
+    "unit": "pacotes",
+    "astronaut_id": "AST-01",
+    "notes": "Refeição completa, 4 pessoas",
+    "timestamp": "2026-05-26T22:55:06+00:00"
+  },
+  {
+    "id": "cbb0b255-06a",
+    "item_id": "FD-203",
+    "item_name": "Ração liofilizada (pacotes 350g)",
+    "quantity_consumed": 10,
+    "unit": "pacotes",
+    "astronaut_id": "AST-03",
+    "notes": "Refeição + estoque ESC",
+    "timestamp": "2026-05-26T22:55:06+00:00"
+  },
+  {
+    "id": "52b09672-b31",
+    "item_id": "INS-2026-04",
+    "item_name": "Insulina (ampolas 10ml)",
+    "quantity_consumed": 2,
+    "unit": "ampolas",
+    "astronaut_id": "AST-04",
+    "notes": "Tripulante diabético tipo 1",
+    "timestamp": "2026-05-26T22:55:06+00:00"
+  },
+  {
+    "id": "7fb2c275-b63",
+    "item_id": "FD-210",
+    "item_name": "Barras energéticas",
+    "quantity_consumed": 12,
+    "unit": "unidades",
+    "astronaut_id": "AST-02",
+    "notes": "Snacks turno noturno",
+    "timestamp": "2026-05-26T22:55:06+00:00"
+  }
+]

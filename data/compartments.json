@@ -1,0 +1,62 @@
+[
+  {
+    "id": "A-12",
+    "name": "Reservatório de água",
+    "category": "water",
+    "temp_min": 4,
+    "temp_max": 20,
+    "humidity_max": 80.0,
+    "current_temp": 15.2,
+    "current_humidity": 45,
+    "last_reading_at": "2026-05-26T22:55:06+00:00",
+    "created_at": "2026-05-26T22:55:06+00:00"
+  },
+  {
+    "id": "B-04",
+    "name": "Estoque seco — alimentos",
+    "category": "food",
+    "temp_min": 10,
+    "temp_max": 25,
+    "humidity_max": 80.0,
+    "current_temp": 21.8,
+    "current_humidity": 38,
+    "last_reading_at": "2026-05-26T22:55:06+00:00",
+    "created_at": "2026-05-26T22:55:06+00:00"
+  },
+  {
+    "id": "M-03",
+    "name": "Médico refrigerado",
+    "category": "medical",
+    "temp_min": 2,
+    "temp_max": 8,
+    "humidity_max": 80.0,
+    "current_temp": 12.5,
+    "current_humidity": 52,
+    "last_reading_at": "2026-05-26T22:55:06+00:00",
+    "created_at": "2026-05-26T22:55:06+00:00"
+  },
+  {
+    "id": "T-01",
+    "name": "Ferramentas e EVA",
+    "category": "tools",
+    "temp_min": 15,
+    "temp_max": 30,
+    "humidity_max": 80.0,
+    "current_temp": 22.0,
+    "current_humidity": 40,
+    "last_reading_at": "2026-05-26T22:55:06+00:00",
+    "created_at": "2026-05-26T22:55:06+00:00"
+  },
+  {
+    "id": "E-05",
+    "name": "Experimentos científicos",
+    "category": "experiments",
+    "temp_min": 15,
+    "temp_max": 25,
+    "humidity_max": 80.0,
+    "current_temp": 20.5,
+    "current_humidity": 42,
+    "last_reading_at": "2026-05-26T22:55:06+00:00",
+    "created_at": "2026-05-26T22:55:06+00:00"
+  }
+]
