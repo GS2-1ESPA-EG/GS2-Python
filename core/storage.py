@@ -2,13 +2,19 @@
 core/storage.py
 ---------------
 Camada de persistência em JSON.
-Responsável por ler e escrever os arquivos de dados com tratamento de exceções.
 
 Por que JSON e não SQLite/CSV?
-- JSON preserva estruturas aninhadas (listas dentro de dicionários);
-- É legível por humanos (importante para auditoria em missão);
-- É o formato esperado pelo FIWARE quando recebe payloads NGSI-LD,
-  então facilita o porte futuro do CLI para o sistema principal.
+- A disciplina de Computational Thinking exige manipulação de arquivos
+  como conceito fundamental, e JSON é o formato que melhor preserva
+  estruturas aninhadas (listas dentro de dicionários);
+- É legível por humanos (auditoria de missão);
+- Cada arquivo é independente: corrupção de um não afeta os outros;
+- É compatível com payloads MQTT/NGSI-LD usados pelo Gateway de bordo
+  quando o sistema é exportado para sincronização com a terra.
+
+Nota arquitetural: este CLI mantém seu próprio diretório `data/` local.
+A sincronização com o sistema principal (App React) e com a terra (FIWARE)
+acontece via exportação explícita pelo menu (ver core/sync.py).
 """
 
 import json
@@ -22,7 +28,7 @@ from pathlib import Path
 # Localização dos arquivos
 # ============================================================
 
-# Diretório data/ relativo à raiz do projeto
+# Diretório data/ relativo à raiz do projeto CLI
 DATA_DIR = Path(__file__).resolve().parent.parent / "data"
 BACKUP_DIR = DATA_DIR / "_backups"
 
@@ -89,10 +95,12 @@ def save_json(filename: str, data) -> None:
 
     Antes de sobrescrever, faz um backup automático em data/_backups/
     (somente se o arquivo já existir). Isso garante que mesmo em caso
-    de queda de energia / kernel panic durante o save, há sempre uma
-    cópia anterior recuperável.
+    de queda de energia durante o save, há sempre uma cópia anterior
+    recuperável.
+
+    Usa escrita atômica: escreve em arquivo temporário e renomeia.
+    Garante que o arquivo original nunca fica em estado parcial.
     """
-    # Garante que os diretórios existem
     DATA_DIR.mkdir(parents=True, exist_ok=True)
     BACKUP_DIR.mkdir(parents=True, exist_ok=True)
 
@@ -110,8 +118,7 @@ def save_json(filename: str, data) -> None:
             pass
 
     try:
-        # Escrita atômica: escreve em arquivo temporário e renomeia
-        # Garante que o arquivo original nunca fica em estado parcial
+        # Escrita atômica
         temp_path = filepath.with_suffix(".tmp")
         with open(temp_path, "w", encoding="utf-8") as fp:
             json.dump(data, fp, indent=2, ensure_ascii=False)
@@ -128,7 +135,6 @@ def health_check() -> dict:
     """
     Verifica se todos os arquivos de dados estão acessíveis e válidos.
     Retorna um dicionário com o status de cada arquivo.
-    Usado pelo menu de manutenção do CLI.
     """
     expected_files = [
         "spacecraft.json",
@@ -138,7 +144,7 @@ def health_check() -> dict:
         "alerts.json",
     ]
 
-    report = {}
+    report = {"_data_dir": str(DATA_DIR)}
     for fname in expected_files:
         filepath = DATA_DIR / fname
         if not filepath.exists():

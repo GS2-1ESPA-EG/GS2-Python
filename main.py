@@ -30,7 +30,9 @@ MENU_HANDLERS = {
     "6": menu.screen_alerts,
     "7": menu.screen_consumption_history,
     "8": menu.screen_stats,
-    "9": menu.screen_config,
+    "9": menu.screen_sync,
+    "C": menu.screen_config,
+    "c": menu.screen_config,
 }
 
 

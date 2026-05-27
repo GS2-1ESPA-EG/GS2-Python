@@ -1,62 +1,92 @@
 [
   {
-    "id": "48c49e19-7fe",
+    "id": "28430ede-3da",
     "item_id": "H2O-082",
     "item_name": "Água potável (bolsas 2L)",
     "quantity_consumed": 16,
     "unit": "unidades",
     "astronaut_id": "AST-01",
     "notes": "Consumo dia 1",
-    "timestamp": "2026-05-26T22:55:06+00:00"
+    "timestamp": "2026-05-27T03:27:03+00:00"
   },
   {
-    "id": "b4040551-abe",
+    "id": "79f252e7-b79",
     "item_id": "H2O-082",
     "item_name": "Água potável (bolsas 2L)",
     "quantity_consumed": 18,
     "unit": "unidades",
     "astronaut_id": "AST-02",
     "notes": "Consumo dia 1 (continuação)",
-    "timestamp": "2026-05-26T22:55:06+00:00"
+    "timestamp": "2026-05-27T03:27:03+00:00"
   },
   {
-    "id": "c7cc966b-346",
+    "id": "b451e21a-5d2",
     "item_id": "FD-203",
     "item_name": "Ração liofilizada (pacotes 350g)",
     "quantity_consumed": 6,
     "unit": "pacotes",
     "astronaut_id": "AST-01",
     "notes": "Refeição completa, 4 pessoas",
-    "timestamp": "2026-05-26T22:55:06+00:00"
+    "timestamp": "2026-05-27T03:27:03+00:00"
   },
   {
-    "id": "cbb0b255-06a",
+    "id": "cebbe0b7-169",
     "item_id": "FD-203",
     "item_name": "Ração liofilizada (pacotes 350g)",
     "quantity_consumed": 10,
     "unit": "pacotes",
     "astronaut_id": "AST-03",
     "notes": "Refeição + estoque ESC",
-    "timestamp": "2026-05-26T22:55:06+00:00"
+    "timestamp": "2026-05-27T03:27:03+00:00"
   },
   {
-    "id": "52b09672-b31",
+    "id": "0a9c8d9a-7fd",
     "item_id": "INS-2026-04",
     "item_name": "Insulina (ampolas 10ml)",
     "quantity_consumed": 2,
     "unit": "ampolas",
     "astronaut_id": "AST-04",
     "notes": "Tripulante diabético tipo 1",
-    "timestamp": "2026-05-26T22:55:06+00:00"
+    "timestamp": "2026-05-27T03:27:03+00:00"
   },
   {
-    "id": "7fb2c275-b63",
+    "id": "5f2e0d7a-c66",
     "item_id": "FD-210",
     "item_name": "Barras energéticas",
     "quantity_consumed": 12,
     "unit": "unidades",
     "astronaut_id": "AST-02",
     "notes": "Snacks turno noturno",
-    "timestamp": "2026-05-26T22:55:06+00:00"
+    "timestamp": "2026-05-27T03:27:03+00:00"
+  },
+  {
+    "id": "0edd0b3d-759",
+    "item_id": "H2O-082",
+    "item_name": "Água potável (bolsas 2L)",
+    "quantity_consumed": 3,
+    "unit": "unidades",
+    "astronaut_id": "AST-01",
+    "notes": "Café da manhã",
+    "timestamp": "2026-05-27T03:27:04+00:00"
+  },
+  {
+    "id": "01ba5066-de8",
+    "item_id": "FD-203",
+    "item_name": "Ração liofilizada (pacotes 350g)",
+    "quantity_consumed": 2,
+    "unit": "pacotes",
+    "astronaut_id": "AST-02",
+    "notes": "Refeição turno A",
+    "timestamp": "2026-05-27T03:27:04+00:00"
+  },
+  {
+    "id": "0c3afecf-758",
+    "item_id": "INS-2026-04",
+    "item_name": "Insulina (ampolas 10ml)",
+    "quantity_consumed": 1,
+    "unit": "ampolas",
+    "astronaut_id": "AST-04",
+    "notes": "Dose diabético",
+    "timestamp": "2026-05-27T03:27:04+00:00"
   }
 ]

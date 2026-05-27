@@ -13,6 +13,7 @@ from core import compartments as comp_core
 from core import items as items_core
 from core import consumption as cons_core
 from core import alerts as alerts_core
+from core import sync as sync_core
 from core.storage import health_check, DataFileCorruptedError, StorageError
 from ui import display, prompts
 from ui.display import Color, colored
@@ -77,7 +78,8 @@ def main_menu() -> str:
     print("    [6] Alertas ativos")
     print("    [7] Histórico de consumo")
     print("    [8] Estatísticas do inventário")
-    print("    [9] Configuração / Manutenção")
+    print("    [9] Sincronizar com MQTT (exportar período offline)")
+    print("    [C] Configuração / Manutenção")
     print("    [0] Sair")
     print()
 
@@ -511,7 +513,110 @@ def screen_stats() -> None:
 
 
 # ============================================================
-# 9. Configuração / Manutenção
+# 9. Sincronização com MQTT (exportar período offline)
+# ============================================================
+
+def screen_sync() -> None:
+    display.clear_screen()
+    display.banner(
+        "Sincronização com MQTT",
+        "Exportar período offline para o Gateway de bordo"
+    )
+
+    print(colored("  Como funciona:", Color.CYAN, bold=True))
+    print()
+    print("  Em condições normais, o App principal publica cada operação")
+    print("  diretamente via MQTT. Quando o App está offline e a tripulação")
+    print("  opera por este CLI, as operações ficam acumuladas localmente.")
+    print()
+    print("  Esta função GERA um envelope MQTT consolidado com tudo o que")
+    print("  foi feito desde a última sincronização. O Gateway de bordo")
+    print("  (camada Edge Computing) consome o envelope e publica cada")
+    print("  mensagem como se nunca tivesse havido pane.")
+    print()
+
+    # Verifica se há cápsula cadastrada
+    sc = sc_core.get_spacecraft()
+    if not sc:
+        display.error(
+            "Cápsula ainda não cadastrada. Use 'Configuração' antes de exportar."
+        )
+        display.pause()
+        return
+
+    # Preview do que vai exportar
+    try:
+        preview = sync_core.preview_export()
+    except ValueError as e:
+        display.error(str(e))
+        display.pause()
+        return
+
+    display.section("Período a sincronizar")
+    cutoff = preview["cutoff_timestamp"]
+    if cutoff:
+        print(f"    Desde: {format_datetime_br(cutoff)}")
+    else:
+        print(colored("    Desde: (primeira exportação, inclui tudo)", Color.DIM))
+
+    display.section("Conteúdo do envelope")
+    stats = preview["stats"]
+    print(f"    Consumos registrados   : {stats['consumptions']}")
+    print(f"    Alertas confirmados    : {stats['alert_acks']}")
+    print(f"    Snapshots de itens     : {stats['item_states']}")
+    print(colored(
+        f"    Total de mensagens MQTT: {preview['total_messages']}",
+        Color.CYAN, bold=True
+    ))
+
+    # Histórico de exportações anteriores
+    previous = sync_core.list_previous_exports()
+    if previous:
+        display.section(f"Exportações anteriores ({len(previous)})")
+        for p in previous[:3]:
+            print(f"    {p['filename']}")
+            print(colored(
+                f"      Gerado em {format_datetime_br(p['generated_at'])} "
+                f"· {p['message_count']} mensagens · {p['size_kb']:.1f} KB",
+                Color.DIM
+            ))
+        if len(previous) > 3:
+            print(colored(f"    (... e mais {len(previous) - 3})", Color.DIM))
+
+    print()
+    if preview["total_messages"] == 0:
+        display.info("Nada novo para exportar desde a última sincronização.")
+        display.pause()
+        return
+
+    if not prompts.ask_yes_no(
+        "Gerar envelope MQTT e marcar período como sincronizado?",
+        default=True
+    ):
+        display.info("Exportação cancelada. Cutoff não foi alterado.")
+        display.pause()
+        return
+
+    try:
+        filepath = sync_core.export_envelope(include_full_state_snapshot=True)
+        display.success("Envelope MQTT gerado.")
+        print()
+        display.info(f"Arquivo: {filepath.name}")
+        display.info(f"Local:   {filepath.parent}")
+        print()
+        print(colored("  Próximo passo:", Color.CYAN, bold=True))
+        print("    O Gateway de bordo (sistema embarcado) detectará o envelope")
+        print("    em exports/ e publicará as mensagens via MQTT na próxima")
+        print("    janela de comunicação. Nenhuma ação manual adicional é")
+        print("    necessária.")
+    except (ValueError, OSError) as e:
+        display.error(f"Falha ao exportar: {e}")
+
+    display.pause()
+
+
+# ============================================================
+# C. Configuração / Manutenção
 # ============================================================
 
 def screen_config() -> None:
@@ -576,6 +681,11 @@ def _show_health_check() -> None:
     print()
     display.section("Diagnóstico dos arquivos de dados")
     report = health_check()
+
+    data_dir = report.pop("_data_dir", "?")
+    display.info(f"Diretório: {data_dir}")
+    print()
+
     for fname, status in report.items():
         if "OK" in status:
             display.success(f"{fname}: {status}")
